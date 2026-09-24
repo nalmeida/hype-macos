@@ -19,6 +19,7 @@ struct Media {
     double size = 0;
     Qt::Alignment alignment = Qt::AlignCenter;
     bool placed() const { return !position.isEmpty(); }
+    QString diagram; // A ```mermaid fence, drawn where a picture would be
 };
 constexpr double defaultPlacedSize = 10;
 const QStringList &mediaPositions();
