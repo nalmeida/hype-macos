@@ -17,7 +17,7 @@ else
         done | sort -V | tail -n 1
     )
     if [ -z "$build_qmake" ]; then
-        build_qmake=$(command -v qmake6 || true)
+        build_qmake=$(command -v qmake6 || command -v qmake || true)
     fi
 fi
 if [ -z "$build_qmake" ]; then
@@ -38,5 +38,5 @@ fi
 if [ -f Makefile ] && [ "$(cat .qmake-used 2>/dev/null || true)" != "$build_qmake" ]; then
     make clean
 fi
-make -j"$(nproc)"
+make -j"$(getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)"
 printf '%s\n' "$build_qmake" > .qmake-used

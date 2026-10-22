@@ -1,18 +1,16 @@
-# Hype
+# Hype for Mac
 
 Simple presentations, written in Markdown. Big headlines, images, video, and code—with a visual editor to put everything in order.
 
-Hype is a native app for Omarchy. Your presentation is a Markdown file with its media alongside it. Choose an installed Omarchy theme, pick a font, and export to PDF or PowerPoint.
+*Hype for Mac is a macOS port of the original [Hype](https://github.com/omacom/hype) presentation tool (originally built for Linux).*
+
+Your presentation is a Markdown file with its media alongside it. Define your colors, pick a font, and export to PDF or PowerPoint.
 
 ## Install
 
-Install Hype from the [Omarchy Package Repository (OPR)](https://github.com/omacom/omarchy-pkgs):
+Currently, Hype for Mac must be built from source. See the **Run from source** section at the bottom for instructions on how to install dependencies and run it via Homebrew.
 
-```sh
-omarchy pkg add hype
-```
-
-Then open **Hype** from the app launcher, or run `hype` in a terminal.
+Once built, you can run `./bin/dev` in a terminal to launch the app!
 
 ## Make a presentation
 
@@ -155,7 +153,7 @@ Each slide supports one image or video. Copy the whole presentation folder when 
 
 ## Choose your look
 
-The palette and font icons in the toolbar choose an installed Omarchy theme and a presentation font. Hover to see the current choices. Theme colors apply to text, code, and slide backgrounds; your images keep their original colors. Code stays monospaced. Hype’s interface follows your current desktop theme independently and updates when you change it.
+The palette and font icons in the toolbar choose an installed Omarchy theme and a presentation font. On macOS, Hype defaults to a built-in Tokyo Night theme, or you can define custom colors (`color_background`, `color_accent`, etc.) directly in your frontmatter. Hover to see the current choices. Theme colors apply to text, code, and slide backgrounds; your images keep their original colors. Code stays monospaced. Hype’s interface follows your current desktop theme independently and updates when you change it.
 
 The header shows the presentation's name with your position in it, such as “Slide 4 of 45”; saving and exporting report their progress on that line. The file icon beside it holds New, Open, Save, Export, and Version history, and is highlighted when you have unsaved changes.
 
@@ -198,6 +196,8 @@ To teach your coding agents about Hype, run `hype skill install`. It copies a sh
 If the presentation is open in the editor, changes written to the file appear there right away, and the editor stays on the slide you were viewing, even when slides are added or removed before it. **Ctrl+Z** undoes such a change. The editor never replaces unsaved changes of its own.
 
 ## Keyboard shortcuts
+
+*(Note: On macOS, substitute `Ctrl` with `Cmd` (`⌘`))* 
 
 Slide navigation and selection shortcuts apply when the sidebar or preview has focus. Inside the Markdown editor, arrows and Shift+arrows move the cursor and select text.
 
@@ -244,11 +244,11 @@ The mouse wheel over the sidebar selects the previous or next slide. Home/End ju
 
 ## Run from source
 
-To build Hype yourself, install a C++17 compiler, make, Qt 6.9 or newer, FFmpeg, and GNU source-highlight; see [the package definition](pkgbuild/PKGBUILD) for dependencies. Then:
+To build Hype yourself, install a C++17 compiler, make, Qt 6.9 or newer, FFmpeg, and GNU source-highlight. On macOS, run `brew install qt@6 ffmpeg source-highlight webp`. Then:
 
 ```sh
 ./bin/build
-./build/hype open examples/welcome.md
+./bin/dev examples/welcome.md
 ```
 
 `bin/build` uses a Qt toolchain under `build/qt/` when present, then falls back to `qmake6` on your PATH. It checks for Qt 6.9 or newer before compiling. Set `HYPE_QMAKE=/path/to/qmake6` to select a different toolchain.
