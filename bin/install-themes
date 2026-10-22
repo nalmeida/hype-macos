@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+
+DEST="$HOME/.config/hype/themes"
+mkdir -p "$DEST"
+count=0
+for theme in "$ROOT"/themes/*/; do
+    name="$(basename "$theme")"
+    mkdir -p "$DEST/$name"
+    cp "$theme/colors.toml" "$DEST/$name/colors.toml"
+    count=$((count + 1))
+done
+printf 'Installed %s themes into %s\n' "$count" "$DEST"
