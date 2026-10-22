@@ -11,7 +11,14 @@ SOURCES += ../src/syntax.cpp
 HEADERS += ../src/syntax.h
 SOURCES += ../src/pptx.cpp
 HEADERS += ../src/pptx.h
-LIBS += -lz -lwebpdemux -lwebp
+macx {
+    LIBS += -lz -lwebpdemux -lwebp
+    # Homebrew installs to different prefixes on Intel vs Apple Silicon.
+    HOMEBREW_PREFIX = $$system(brew --prefix)
+    INCLUDEPATH += $$HOMEBREW_PREFIX/include
+    LIBS += -L$$HOMEBREW_PREFIX/lib
+}
+!macx: LIBS += -lz -lwebpdemux -lwebp
 
 SOURCES += ../src/animationexport.cpp
 HEADERS += ../src/animationexport.h

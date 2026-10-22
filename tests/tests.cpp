@@ -1541,7 +1541,11 @@ static void write(const QString &path, const QString &content) {
         QCOMPARE(withMedia(examples, replacement), examples + "\n" + replacement + "\n");
     }
     void asynchronousExport() {
+#ifdef Q_OS_MACOS
+        const QString executable = QFINDTESTDATA("../build/hype.app/Contents/MacOS/hype");
+#else
         const QString executable = QFINDTESTDATA("../build/hype");
+#endif
         QVERIFY(!executable.isEmpty());
         QTemporaryDir tmp;
         Deck deck(nullptr, executable);

@@ -8,4 +8,9 @@ make -j"$(nproc)"
 # The window-level tests catch the regressions unit tests miss, so they run by default.
 # Set HYPE_GUI_TESTS=0 to skip them, e.g. on a machine without multimedia.
 if [ "${HYPE_GUI_TESTS-1}" = 0 ]; then unset HYPE_GUI_TESTS; else export HYPE_GUI_TESTS=1; fi
-QT_QPA_PLATFORM=offscreen QT_QPA_PLATFORMTHEME=generic QT_STYLE_OVERRIDE=Fusion ./hype-tests "$@"
+if [ "$(uname)" = "Darwin" ]; then
+    HYPE_TESTS_BIN=./hype-tests.app/Contents/MacOS/hype-tests
+else
+    HYPE_TESTS_BIN=./hype-tests
+fi
+QT_QPA_PLATFORM=offscreen QT_QPA_PLATFORMTHEME=generic QT_STYLE_OVERRIDE=Fusion "$HYPE_TESTS_BIN" "$@"
