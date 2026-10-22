@@ -4,6 +4,13 @@ set -eu
 HYPE_ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 mkdir -p "$HYPE_ROOT/build"
 
+# Serialize builds when the launcher is activated more than once.
+exec 9>"$HYPE_ROOT/build/dev-build.lock"
+if [ "$(uname)" = "Darwin" ]; then
+    lockf /dev/fd/9
+else
+    flock 9
+fi
 if ! "$HYPE_ROOT/bin/build" >"$HYPE_ROOT/build/dev-build.log" 2>&1; then
     printf 'Hype build failed. See %s\n' "$HYPE_ROOT/build/dev-build.log" >&2
     # Notify on macOS via osascript; fall back to notify-send on Linux.
@@ -16,6 +23,7 @@ if ! "$HYPE_ROOT/bin/build" >"$HYPE_ROOT/build/dev-build.log" 2>&1; then
     fi
     exit 1
 fi
+exec 9>&-
 
 cd "$HYPE_ROOT"
 export HYPE_DESKTOP_FILE=hype-dev

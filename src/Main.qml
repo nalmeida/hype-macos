@@ -1100,14 +1100,14 @@ ApplicationWindow {
                 AppMenu {
                     id: fileMenu; objectName: "fileMenu"
                     y: parent.height + 4
-                    AppMenuItem { text: "New presentation"; hint: "Ctrl+N"; onTriggered: deck.newDeck() }
-                    AppMenuItem { text: "Open…"; hint: "Ctrl+O"; onTriggered: deck.openDialog() }
+                    AppMenuItem { text: "New presentation"; hint: win.osShortcut("Ctrl+N"); onTriggered: deck.newDeck() }
+                    AppMenuItem { text: "Open…"; hint: win.osShortcut("Ctrl+O"); onTriggered: deck.openDialog() }
                     AppMenuSeparator {}
-                    AppMenuItem { text: deck.dirty ? "Save changes" : "Save"; hint: "Ctrl+S"; onTriggered: deck.save() }
-                    AppMenuItem { text: "Save as…"; hint: "Ctrl+Shift+S"; onTriggered: deck.saveAs() }
+                    AppMenuItem { text: deck.dirty ? "Save changes" : "Save"; hint: win.osShortcut("Ctrl+S"); onTriggered: deck.save() }
+                    AppMenuItem { text: "Save as…"; hint: win.osShortcut("Ctrl+Shift+S"); onTriggered: deck.saveAs() }
                     AppMenuSeparator {}
-                    AppMenuItem { text: "Export as PDF…"; hint: "Ctrl+E"; enabled: !deck.exporting; onTriggered: deck.exportDialog("pdf") }
-                    AppMenuItem { text: "Export as PowerPoint…"; hint: "Ctrl+Shift+E"; enabled: !deck.exporting; onTriggered: deck.exportDialog("pptx") }
+                    AppMenuItem { text: "Export as PDF…"; hint: win.osShortcut("Ctrl+E"); enabled: !deck.exporting; onTriggered: deck.exportDialog("pdf") }
+                    AppMenuItem { text: "Export as PowerPoint…"; hint: win.osShortcut("Ctrl+Shift+E"); enabled: !deck.exporting; onTriggered: deck.exportDialog("pptx") }
                     AppMenuSeparator {}
                     AppMenuItem { text: "Version history…"; onTriggered: historyDialog.open() }
                 }
@@ -1177,8 +1177,8 @@ ApplicationWindow {
     }
     // Shared by the sidebar and the overview, so it cannot live inside either.
     AppMenu { id: slideMenu
-        AppMenuItem { text: "New slide after this"; hint: "Ctrl+Enter"; onTriggered: { win.addSlide() } }
-        AppMenuItem { text: deck.selectionCount > 1 ? "Duplicate slides" : "Duplicate slide"; hint: "Ctrl+D"; onTriggered: deck.duplicateSlide() }
+        AppMenuItem { text: "New slide after this"; hint: win.osShortcut("Ctrl+Enter"); onTriggered: { win.addSlide() } }
+        AppMenuItem { text: deck.selectionCount > 1 ? "Duplicate slides" : "Duplicate slide"; hint: win.osShortcut("Ctrl+D"); onTriggered: deck.duplicateSlide() }
         AppMenuSeparator {}
         AppMenuItem { text: deck.selectionCount > 1 ? "Delete slides" : "Delete slide"; hint: "Del"; destructive: true; onTriggered: deck.deleteSlide() }
     }
